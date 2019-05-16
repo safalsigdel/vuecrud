@@ -18,3 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('posts', 'PostController');
+Route::get('edit-post/{id}', function ($id) {
+    return \App\Post::find($id);
+});
+Route::get('ok/{id}', function ($id) {
+
+    return $id;
+});
+Route::post('update-post', 'PostController@updatePost');

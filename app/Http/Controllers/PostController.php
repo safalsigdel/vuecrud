@@ -32,6 +32,19 @@ class PostController extends Controller
     {
         //
     }
+    public function getSinglePost($id)
+    {
+        return Post::find($id);
+    }
+
+    public function updatePost(Request $request)
+    {
+        $posts = $request->all();
+        $id = $posts['post']['id'];
+        $title = $posts['post']['title'];
+        $body = $posts['post']['body'];
+        Post::where('id', $id)->update(['title'=>$title,'body'=>$body]);
+    }
 
     /**
      * Store a newly created resource in storage.

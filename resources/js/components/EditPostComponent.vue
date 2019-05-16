@@ -38,48 +38,41 @@
                     </div>
                 </nav>
                 <div class="card-body">
-                    <br/>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Title</th>
-                            <th>Body</th>
-                            <th>Created At</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="(post,index) in posts">
-                            <th>{{index+1}}</th>
-                            <td>{{post.title}}</td>
-                            <td>{{post.body}}</td>
-                            <td>{{post.created_at}}</td>
-                            <td><router-link to='edit-post/post.id'>Edit</router-link></td>
-
-                        </tr>
-                        </tbody>
-                    </table>
-                    <router-link to="/user">Go to User</router-link>
-                    <router-link to="/posts">Got to posts </router-link>
+                    <p>Edit Post</p>
+                    <form id="myForm">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" id="title" class="form-control" name="title" v-model="post.title" >
+                        </div>
+                        <div class="form-group">
+                            <label for="body">Body</label>
+                            <input type="text" id="body" class="form-control" name="body" v-model="post.body">
+                        </div>
+                        <button type="submit" @click="handleSubmit">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
 <script>
     export default {
-        data:function(){
-            return {posts:''}
+        data(){
+            return {post:''}
         },
-        created(){
-            Axios.get('/api/posts').then((response)=>{
-                console.log(response);
-                this.posts = response.data;
-            });
-        },
-        mounted() {
-            console.log('Component mounted.')
+       methods:{
+         handleSubmit(e){
+             e.preventDefault();
+             Axios.post('/api/update-post',{post:this.post}).then((response) => {
+                 this.$router.push('/posts');
+             });
+         }
+       },
+        created() {
+            Axios.get('/api/edit-post/'+this.$route.params.id).then((response)=>{
+                this.post = response.data;
+                console.log(response.data);
+            })
         }
     }
 </script>

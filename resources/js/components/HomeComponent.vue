@@ -37,49 +37,10 @@
                         </form>
                     </div>
                 </nav>
-                <div class="card-body">
-                    <br/>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Title</th>
-                            <th>Body</th>
-                            <th>Created At</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="(post,index) in posts">
-                            <th>{{index+1}}</th>
-                            <td>{{post.title}}</td>
-                            <td>{{post.body}}</td>
-                            <td>{{post.created_at}}</td>
-                            <td><router-link to='edit-post/post.id'>Edit</router-link></td>
-
-                        </tr>
-                        </tbody>
-                    </table>
-                    <router-link to="/user">Go to User</router-link>
-                    <router-link to="/posts">Got to posts </router-link>
-                </div>
+                    <div class="card-body">
+                       <p>This is Home page</p>
+                    </div>
             </div>
         </div>
     </div>
 </template>
-
-<script>
-    export default {
-        data:function(){
-            return {posts:''}
-        },
-        created(){
-            Axios.get('/api/posts').then((response)=>{
-                console.log(response);
-                this.posts = response.data;
-            });
-        },
-        mounted() {
-            console.log('Component mounted.')
-        }
-    }
-</script>

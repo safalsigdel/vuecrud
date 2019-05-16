@@ -4,7 +4,6 @@ window.Vue = require('vue');
 window.VueAxios = require('vue-axios').default;
 window.Axios = require('axios').default;
 
-
 import VueRouter from 'vue-router';
 
 Vue.use(VueRouter,VueAxios,axios);
@@ -12,7 +11,7 @@ Vue.use(VueRouter,VueAxios,axios);
 const routes = [
     {
         path: '/',
-        component: require('./components/ExampleComponent.vue').default
+        component: require('./components/HomeComponent.vue').default
     },
     {
         path: '/user',
@@ -21,6 +20,10 @@ const routes = [
     {
         path:'/posts',
         component:require('./components/Post.vue').default
+    },
+    {
+        path: '/edit-post/:id',
+        component:require('./components/EditPostComponent.vue').default
     }
 ];
 const router = new VueRouter({
