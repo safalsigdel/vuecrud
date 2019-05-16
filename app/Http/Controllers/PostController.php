@@ -17,9 +17,10 @@ class PostController extends Controller
     {
         return view('app');
     }
+
     public function index()
     {
-        return Post::orderBy('id', 'DESC')->get();
+        return Post::latest()->get();
     }
 
     /**

@@ -9,20 +9,23 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter,VueAxios,axios);
 
-const exampleComponent = require('./components/ExampleComponent.vue').default;
-const userComponent = require('./components/User.vue').default;
 const routes = [
     {
         path: '/',
-        component: exampleComponent
+        component: require('./components/ExampleComponent.vue').default
     },
     {
         path: '/user',
-        component: userComponent
+        component: require('./components/User.vue').default
+    },
+    {
+        path:'/posts',
+        component:require('./components/Post.vue').default
     }
 ];
 const router = new VueRouter({
     routes,
+    mode:'history'
 });
 
 const app = new Vue({

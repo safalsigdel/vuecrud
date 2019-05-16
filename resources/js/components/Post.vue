@@ -6,32 +6,27 @@
                     <div class="card-header">Home Component</div>
 
                     <div class="card-body">
-                        Welcome to Homepage
+                       <p class="red">Post Page</p>
                         <br/>
                         <ul v-for="post in posts">
                             <li>{{post.body}}</li>
                         </ul>
-                        <router-link to="/user">Go to User</router-link>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
 <script>
-    export default {
+    export default{
         data:function(){
-            return {posts:''}
+            return {posts:''};
         },
         created(){
             Axios.get('/api/posts').then((response)=>{
-                console.log(response);
                 this.posts = response.data;
-            });
-        },
-        mounted() {
-            console.log('Component mounted.')
+                console.log(response);
+            })
         }
     }
 </script>
