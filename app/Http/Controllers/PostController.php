@@ -20,7 +20,7 @@ class PostController extends Controller
 
     public function index()
     {
-        return Post::latest()->get();
+        return Post::all();
     }
 
     /**
@@ -44,6 +44,11 @@ class PostController extends Controller
         $title = $posts['post']['title'];
         $body = $posts['post']['body'];
         Post::where('id', $id)->update(['title'=>$title,'body'=>$body]);
+    }
+
+    public function deletePost($id)
+    {
+        Post::destroy($id);
     }
 
     /**

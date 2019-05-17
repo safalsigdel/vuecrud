@@ -54,8 +54,8 @@
                             <td>{{post.title}}</td>
                             <td>{{post.body}}</td>
                             <td>{{post.created_at}}</td>
-                            <td><router-link to='edit-post/post.id'>Edit</router-link></td>
-
+                            <td><router-link :to="{ name: 'editPost', params: {id: post.id } }">Edit</router-link></td>
+                            <td><router-link :to="{ name:'deletePost',params:{id:post.id } }">Delete</router-link></td>
                         </tr>
                         </tbody>
                     </table>

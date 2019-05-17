@@ -22,8 +22,14 @@ const routes = [
         component:require('./components/Post.vue').default
     },
     {
-        path: '/edit-post/:id',
+        path: '/posts/:id',
+        name: 'editPost',
         component:require('./components/EditPostComponent.vue').default
+    },
+    {
+        path:'/post/delete/:id',
+        name:'deletePost',
+        component:require('./components/Deletepost.vue').default 
     }
 ];
 const router = new VueRouter({

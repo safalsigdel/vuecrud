@@ -24,3 +24,4 @@ Route::get('/{any}', function () {
 })->where('any','.*');
 
 Route::get('/', 'PostController@home')->name('login');
+Route::get('delete/post/:id','PostController@deletePost');
