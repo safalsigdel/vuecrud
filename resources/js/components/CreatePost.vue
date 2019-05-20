@@ -38,48 +38,62 @@
                     </div>
                 </nav>
                 <div class="card-body">
-                    <br/>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Title</th>
-                            <th>Body</th>
-                            <th>Created At</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="(post,index) in posts">
-                            <th>{{index+1}}</th>
-                            <td>{{post.title}}</td>
-                            <td>{{post.body}}</td>
-                            <td>{{post.created_at}}</td>
-                            <td><router-link :to="{ name: 'editPost', params: {id: post.id } }">Edit</router-link></td>
-                            <td><router-link :to="{ name:'deletePost',params:{id:post.id } }">Delete</router-link></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <router-link to="/user">Go to User</router-link>
-                    <router-link to="/post/create">Create Post</router-link>
+                    <p>Edit Post</p>
+                    <form id="myForm">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" id="title" class="form-control" name="title" v-model="title" >
+                            <span class="red" v-if="titleErrorData">{{titleErrorData}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="body">Body</label>
+                            <input type="text" id="body" class="form-control" name="body" v-model="body">
+                            <span class="red" v-if="bodyErrorData">{{bodyErrorData}}</span>
+                        </div>
+                        <button type="submit" @click="handleSubmit">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
 <script>
     export default {
-        data:function(){
-            return {posts:''}
+        data(){
+            return {
+                titleError:false,
+                titleErrorData: '',
+                bodyErrorData: '',
+                title: '',
+                body: ''
+            }
         },
-        created(){
-            Axios.get('/api/posts').then((response)=>{
-                console.log(response);
-                this.posts = response.data;
-            });
-        },
-        mounted() {
-            console.log('Component mounted.')
+       methods:{
+         handleSubmit(e){
+             e.preventDefault();
+             Axios.post('/api/posts', {title:this.title, body: this.body})
+                 .then((response) => {
+                     console.log(response);
+                 }).catch((error)=>{
+
+                 let title = error.response.data.errors.title[0];
+                 let body = error.response.data.errors.body[0];
+                 console.log(error.response.data.errors);
+                 if (title) {
+                     this.titleErrorData = title;
+                 }
+                 if (body) {
+                     this.bodyErrorData = body;
+                 }
+
+             });
+         }
+       },
+        created() {
+            Axios.get('/api/edit-post/'+this.$route.params.id).then((response)=>{
+                this.post = response.data;
+                console.log(response.data);
+            })
         }
     }
 </script>

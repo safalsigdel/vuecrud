@@ -30,6 +30,11 @@ const routes = [
         path:'/post/delete/:id',
         name:'deletePost',
         component:require('./components/Deletepost.vue').default 
+    },
+    {
+        path:'/post/create',
+        name:'createPost',
+        component:require('./components/CreatePost.vue').default
     }
 ];
 const router = new VueRouter({
