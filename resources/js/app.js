@@ -7,11 +7,13 @@ window.Axios = require('axios').default;
 import VueRouter from 'vue-router';
 
 Vue.use(VueRouter,VueAxios,axios);
+let auth = localStorage.getItem('auth');
 
 const routes = [
     {
         path: '/',
-        component: require('./components/HomeComponent.vue').default
+        component: require('./components/HomeComponent.vue').default,
+        meta:{requiredAuth:true}
     },
     {
         path: '/user',
@@ -41,7 +43,19 @@ const router = new VueRouter({
     routes,
     mode:'history'
 });
+router.beforeEach((to, from, next) => {
 
+    if (to.matched.some(record => record.meta.requiredAuth)) {
+        if (auth === 'unauthenticated') {
+            next({
+                path: '/',
+                query:{redirect: to.fullPath}
+            })
+        }else {
+            next();
+        }
+    }
+});
 const app = new Vue({
     router,
 }).$mount('#app');

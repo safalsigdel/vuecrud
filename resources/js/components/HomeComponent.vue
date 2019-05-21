@@ -7,13 +7,13 @@
                     <div class="card-header">Login</div>
 
                     <div class="card-body">
-                        <form onsubmit="handleSubmit()">
+                        <form @submit="handleSubmit">
 
                             <div class="form-group row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">Email Address</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email" autofocus>
+                                    <input id="email" type="email" class="form-control" name="email" v-model="email" autofocus>
 
                                     <span class="invalid-feedback" role="alert">
 <!--                                        <strong>{{ $message }}</strong>-->
@@ -25,7 +25,7 @@
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" name="password" required autocomplete>
+                                    <input id="password" type="password" class="form-control" name="password" v-model="password" required autocomplete>
                                     <span class="invalid-feedback" role="alert">
 <!--                                        <strong>{{ $message }}</strong>-->
                                     </span>
@@ -51,8 +51,20 @@
         data(){
             return {email:'',password:''}
         },
-        handleSubmit(e) {
-            e.preventDefault();
+        methods:{
+            handleSubmit(e){
+                e.preventDefault();
+                Axios.post('api/login', {email:this.email, password:this.password}).then((response) => {
+                    console.log(response.data);
+                    if (response.data==="false") {
+                        localStorage.setItem('auth', 'unauthenticated');
+                        this.$router.push('/');
+                    }else{
+                        localStorage.setItem('auth', 'authenticated');
+                        this.$router.push('/posts')
+                    }
+                });
+            }
         }
     }
 </script>

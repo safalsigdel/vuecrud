@@ -26,3 +26,4 @@ Route::get('ok/{id}', function ($id) {
     return $id;
 });
 Route::post('update-post', 'PostController@updatePost');
+Route::post('login', 'api\UserLoginController@login');
