@@ -1,46 +1,58 @@
 <template>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+    <div class="container">
+    <br/>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Login</div>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
-                                <router-link to="/" class="nav-link">Home</router-link>
-                                <!--<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
-                            </li>
-                            <li class="nav-item">
-                                <router-link to="/posts" class="nav-link">Posts</router-link>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Dropdown
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a>
+                    <div class="card-body">
+                        <form onsubmit="handleSubmit()">
+
+                            <div class="form-group row">
+                                <label for="email" class="col-md-4 col-form-label text-md-right">Email Address</label>
+
+                                <div class="col-md-6">
+                                    <input id="email" type="email" class="form-control" name="email" autofocus>
+
+                                    <span class="invalid-feedback" role="alert">
+<!--                                        <strong>{{ $message }}</strong>-->
+                                    </span>
                                 </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled" href="#">Disabled</a>
-                            </li>
-                        </ul>
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+
+                                <div class="col-md-6">
+                                    <input id="password" type="password" class="form-control" name="password" required autocomplete>
+                                    <span class="invalid-feedback" role="alert">
+<!--                                        <strong>{{ $message }}</strong>-->
+                                    </span>
+<!--                                    @enderror-->
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <div class="col-md-8 offset-md-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
                         </form>
                     </div>
-                </nav>
-                    <div class="card-body">
-                       <p>This is Home page</p>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
+<script>
+    export default{
+        data(){
+            return {email:'',password:''}
+        },
+        handleSubmit(e) {
+            e.preventDefault();
+        }
+    }
+</script>
