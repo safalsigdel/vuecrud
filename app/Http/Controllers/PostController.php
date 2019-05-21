@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
@@ -30,11 +31,11 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        
     }
     public function getSinglePost($id)
     {
-        return Post::find($id);
+        return Post::findOrFail($id);
     }
 
     public function updatePost(Request $request)
@@ -57,9 +58,9 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        //
+        Post::create($request->all());
     }
 
     /**
