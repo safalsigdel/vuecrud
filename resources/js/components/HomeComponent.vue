@@ -27,7 +27,7 @@
                                 <div class="col-md-6">
                                     <input id="password" type="password" class="form-control" name="password" v-model="password" required autocomplete>
                                     <span class="invalid-feedback" role="alert">
-<!--                                        <strong>{{ $message }}</strong>-->
+                                        <strong>{{invalidResponse}}</strong>
                                     </span>
 <!--                                    @enderror-->
                                 </div>
@@ -49,21 +49,30 @@
 <script>
     export default{
         data(){
-            return {email:'',password:''}
+            return {
+                email:'',
+                password:'',
+                invalidResponse:''
+            }
         },
         methods:{
             handleSubmit(e){
                 e.preventDefault();
                 Axios.post('api/login', {email:this.email, password:this.password}).then((response) => {
-                    console.log(response.data);
+                    console.log(response.data.body);
                     if (response.data==="false") {
-                        localStorage.setItem('auth', 'unauthenticated');
-                        this.$router.push('/');
+                        this.invalidResponse = "Email or password doesn't match";
                     }else{
-                        localStorage.setItem('auth', 'authenticated');
+                        localStorage.setItem('api_token',response.data.api_token);
                         this.$router.push('/posts')
                     }
                 });
+            },
+
+        },
+        created() {
+            if (localStorage.getItem('api_token')) {
+                this.$router.push('/posts');
             }
         }
     }

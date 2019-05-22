@@ -105,6 +105,15 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::where
+        ('id', $id)->first();
+        if(!$post){
+            return response()->json(['message' => 'Resource not found'], 404);
+        }else {
+            $deletedPost = $post->title;
+            $post->delete();
+            return response()->json([ 'deletedPost' => $deletedPost],203);
+        }
+
     }
 }

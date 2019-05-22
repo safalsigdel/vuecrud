@@ -68,13 +68,20 @@
                 body: ''
             }
         },
+        mounted(){
+            console.log('mounted');
+        },
        methods:{
          handleSubmit(e){
              e.preventDefault();
              Axios.post('/api/posts', {title:this.title, body: this.body})
                  .then((response) => {
-                     console.log(response);
+                     if (response) {
+                         this.$router.push('/posts');
+                     }
+
                  }).catch((error)=>{
+                 console.log('error');
 
                  let title = error.response.data.errors.title[0];
                  let body = error.response.data.errors.body[0];
@@ -93,6 +100,7 @@
             Axios.get('/api/edit-post/'+this.$route.params.id).then((response)=>{
                 this.post = response.data;
                 console.log(response.data);
+
             })
         }
     }

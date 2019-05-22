@@ -55,7 +55,7 @@
                             <td>{{post.body}}</td>
                             <td>{{post.created_at}}</td>
                             <td><router-link :to="{ name: 'editPost', params: {id: post.id } }">Edit</router-link></td>
-                            <td><router-link :to="{ name:'deletePost',params:{id:post.id } }">Delete</router-link></td>
+                            <td><a href="#" @click="handleDelete(post.id)">Delete</a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -72,11 +72,22 @@
         data:function(){
             return {posts:''}
         },
+        methods: {
+            handleDelete(id){
+                Axios.delete('api/posts/'+id).then((response) => {
+                    this.$router.push('/posts');
+                });
+                this.fetchData();
+            },
+            fetchData(){
+                Axios.get('/api/posts').then((response)=>{
+                    console.log(response);
+                    this.posts = response.data;
+                });
+            }
+        },
         created(){
-            Axios.get('/api/posts').then((response)=>{
-                console.log(response);
-                this.posts = response.data;
-            });
+            this.fetchData();
         },
         mounted() {
             console.log('Component mounted.')
