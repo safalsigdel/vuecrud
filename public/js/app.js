@@ -2026,8 +2026,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2045,14 +2043,12 @@ __webpack_require__.r(__webpack_exports__);
         email: this.email,
         password: this.password
       }).then(function (response) {
-        console.log(response.data.body);
-
-        if (response.data === "false") {
-          _this.invalidResponse = "Email or password doesn't match";
-        } else {
+        if (response) {
           localStorage.setItem('api_token', response.data.api_token);
 
           _this.$router.push('/posts');
+        } else {
+          _this.invalidResponse = "Email or password do not matched";
         }
       });
     }
@@ -2144,10 +2140,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      posts: ''
+      posts: '',
+      postNull: false
     };
   },
   methods: {
@@ -2165,6 +2163,10 @@ __webpack_require__.r(__webpack_exports__);
       Axios.get('/api/posts').then(function (response) {
         console.log(response);
         _this2.posts = response.data;
+
+        if (_this2.posts.length === 0) {
+          _this2.postNull = true;
+        }
       });
     }
   },
@@ -38250,14 +38252,9 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      staticClass: "invalid-feedback",
-                      attrs: { role: "alert" }
-                    },
-                    [_c("strong", [_vm._v(_vm._s(_vm.invalidResponse))])]
-                  )
+                  _c("strong", { staticClass: "red" }, [
+                    _vm._v(_vm._s(_vm.invalidResponse))
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -38375,49 +38372,56 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.posts, function(post, index) {
-                  return _c("tr", [
-                    _c("th", [_vm._v(_vm._s(index + 1))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(post.title))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(post.body))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(post.created_at))]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      [
+                [
+                  _vm.postNull ? _c("th", [_vm._v("No data found")]) : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.posts, function(post, index) {
+                    return _c("tr", [
+                      _c("th", [_vm._v(_vm._s(index + 1))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(post.title))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(post.body))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(post.created_at))]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              attrs: {
+                                to: {
+                                  name: "editPost",
+                                  params: { id: post.id }
+                                }
+                              }
+                            },
+                            [_vm._v("Edit")]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("td", [
                         _c(
-                          "router-link",
+                          "a",
                           {
-                            attrs: {
-                              to: { name: "editPost", params: { id: post.id } }
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                return _vm.handleDelete(post.id)
+                              }
                             }
                           },
-                          [_vm._v("Edit")]
+                          [_vm._v("Delete")]
                         )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
-                          attrs: { href: "#" },
-                          on: {
-                            click: function($event) {
-                              return _vm.handleDelete(post.id)
-                            }
-                          }
-                        },
-                        [_vm._v("Delete")]
-                      )
+                      ])
                     ])
-                  ])
-                }),
-                0
+                  })
+                ],
+                2
               )
             ]),
             _vm._v(" "),

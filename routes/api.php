@@ -16,7 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->group(function () {
 
     Route::post('update-post', 'PostController@updatePost');
-    Route::post('register', 'api\UserLoginController@register');
     Route::resource('posts', 'PostController');
 //    Route::post('post/{id}',PostController)
 
@@ -27,8 +26,7 @@ Route::middleware('auth:api')->group(function () {
 
 });
 Route::post('login', 'api\UserLoginController@login');
-
-
+Route::post('register', 'api\UserLoginController@register');
 Route::get('ok/{id}', function ($id) {
 
     return $id;

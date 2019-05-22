@@ -49,6 +49,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <th v-if="postNull">No data found</th>
                         <tr v-for="(post,index) in posts">
                             <th>{{index+1}}</th>
                             <td>{{post.title}}</td>
@@ -70,7 +71,10 @@
 <script>
     export default {
         data:function(){
-            return {posts:''}
+            return {
+                posts: '',
+                postNull:false,
+            }
         },
         methods: {
             handleDelete(id){
@@ -83,6 +87,9 @@
                 Axios.get('/api/posts').then((response)=>{
                     console.log(response);
                     this.posts = response.data;
+                    if (this.posts.length === 0) {
+                        this.postNull = true;
+                    }
                 });
             }
         },

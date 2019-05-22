@@ -33,7 +33,7 @@ class UserLoginController extends Controller
         if ($user) {
             return response()->json($user);
         }else{
-            return response()->json('false');
+            return response()->json(['false'],401);
         }
     }
 }
