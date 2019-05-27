@@ -17,17 +17,12 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('update-post', 'PostController@updatePost');
     Route::resource('posts', 'PostController');
-//    Route::post('post/{id}',PostController)
-
-    Route::get('edit-post/{id}', function ($id) {
-        return \App\Post::find($id);
-    });
+    Route::get('/profile', 'api\UserController@getProfile');
+    Route::post('update-profile', 'api\UserController@updateProfile');
+    Route::get('/users', 'api\UserController@index');
+    Route::get('/search/{name}', 'api\SearchController@index');
 
 
 });
-Route::post('login', 'api\UserLoginController@login');
-Route::post('register', 'api\UserLoginController@register');
-Route::get('ok/{id}', function ($id) {
-
-    return $id;
-});
+Route::post('login', 'api\UserController@login');
+Route::post('register', 'api\UserController@register');

@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
-class RegisterRequest extends FormRequest
+class ProfileUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,18 +23,15 @@ class RegisterRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
         return [
             'first_name' => 'required',
             'last_name' => 'required',
-            'username' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|numeric',
             'profession' => 'required',
-            'email' => 'required|unique:users',
-            'password' => 'required|min:6',
-            'passwordConfirm'=>'same:password'
 
-        ];
+            ];
     }
+
 }

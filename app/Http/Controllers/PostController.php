@@ -35,22 +35,14 @@ class PostController extends Controller
     }
     public function getSinglePost($id)
     {
-        return Post::findOrFail($id);
+        $post= Post::findOrFail($id);
+        if ($post) {
+            return response()->json($post);
+        }else{
+            return response()->json(['message' => 'Requested resource not found']);
+        }
     }
 
-    public function updatePost(Request $request)
-    {
-        $posts = $request->all();
-        $id = $posts['post']['id'];
-        $title = $posts['post']['title'];
-        $body = $posts['post']['body'];
-        Post::where('id', $id)->update(['title'=>$title,'body'=>$body]);
-    }
-
-    public function deletePost($id)
-    {
-        Post::destroy($id);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -60,7 +52,12 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        Post::create($request->all());
+        $post = Post::create($request->all());
+        if ($post) {
+            return response()->json($post);
+        }else{
+            return response()->json(['message' => "Couldn't create post"]);
+        }
     }
 
     /**
@@ -69,20 +66,16 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        if ($post) {
+            return response()->json(Post::find($id));
+        }else{
+            return response()->json(['message' => "Post not found "]);
+        }
     }
 
     /**
@@ -94,7 +87,16 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $posts = $request->all();
+        $title = $posts['post']['title'];
+        $body = $posts['post']['body'];
+        $post = Post::where('id', $id)->update(['title'=>$title,'body'=>$body]);
+        if ($post) {
+            return response()->json($request->all());
+
+        }else{
+            return response()->json(['message' => "Post couldn't updated"]);
+        }
     }
 
     /**
@@ -112,7 +114,7 @@ class PostController extends Controller
         }else {
             $deletedPost = $post->title;
             $post->delete();
-            return response()->json([ 'deletedPost' => $deletedPost],203);
+            return response()->json(['message'=>'Post deleted','name'=>$deletedPost],203);
         }
 
     }

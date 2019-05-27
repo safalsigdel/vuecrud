@@ -1,47 +1,29 @@
 <template>
     <div class="container">
-    <br/>
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Login</div>
-
-                    <div class="card-body">
-                        <form @submit="handleSubmit">
-
-                            <div class="form-group row">
-                                <label for="email" class="col-md-4 col-form-label text-md-right">Email Address</label>
-
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email" v-model="email" autofocus>
-
-                                    <span class="invalid-feedback" role="alert">
-<!--                                        <strong>{{ $message }}</strong>-->
-                                    </span>
-                                </div>
+        <br><br><br><br>
+    <div class="row">
+            <div class="panel col-sm-5 offset-3">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Please sign in</h3>
+                </div>
+                <div class="panel-body">
+                    <form @submit.prevent="handleSubmit">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="E-mail" name="email" type="text" v-model="email">
                             </div>
-
-                            <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-
-                                <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" name="password" v-model="password" required autocomplete>
-                                        <strong class="red">{{invalidResponse}}</strong>
-<!--                                    @enderror-->
-                                </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="password" v-model="password" type="password" value="">
+                                <span class="red">{{invalidResponse}}</span>
                             </div>
-                            <div class="form-group row mb-0">
-                                <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Submit
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+                            <br>
+                            <span class="blue">Don't have an account?</span><span class="green"><router-link to="/register"> Create one</router-link></span>
+                        </fieldset>
+                    </form>
                 </div>
             </div>
-        </div>
+    </div>
     </div>
 </template>
 <script>
@@ -54,13 +36,12 @@
             }
         },
         methods:{
-            handleSubmit(e){
-                e.preventDefault();
+            handleSubmit(){
                 Axios.post('api/login', {email: this.email, password: this.password})
                     .then((response) => {
                         if (response) {
                             localStorage.setItem('api_token', response.data.api_token);
-                            this.$router.push('/posts');
+                            this.$router.push('/profile');
                         } else {
                             this.invalidResponse = "Email or password do not matched";
                         }
@@ -70,8 +51,14 @@
         },
         created() {
             if (localStorage.getItem('api_token')) {
-                this.$router.push('/posts');
+                this.$router.push('/profile');
             }
         }
     }
 </script>
+<style scoped>
+    .custom {
+        margin-left: 12px;
+
+    }
+</style>

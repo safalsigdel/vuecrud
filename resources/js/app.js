@@ -5,8 +5,9 @@ window.VueAxios = require('vue-axios').default;
 window.Axios = require('axios').default;
 
 import VueRouter from 'vue-router';
+import moment from 'moment';
 
-Vue.use(VueRouter,VueAxios,axios);
+Vue.use(VueRouter,VueAxios,axios,moment);
 
 const routes = [
     {
@@ -15,12 +16,8 @@ const routes = [
         meta: {title:'Login'},
     },
     {
-        path: '/user',
-        component: require('./components/User.vue').default,
-        meta: {title:'User'}
-    },
-    {
         path:'/posts',
+        name: 'post',
         component:require('./components/Post.vue').default,
         meta:{title:'Posts',requiredAuth:true}
     },
@@ -29,12 +26,6 @@ const routes = [
         name: 'editPost',
         component:require('./components/EditPostComponent.vue').default,
         meta:{title:'Edit Post',requiredAuth:true}
-
-    },
-    {
-        path:'/post/delete/:id',
-        name:'deletePost',
-        component:require('./components/Deletepost.vue').default ,
 
     },
     {
@@ -50,7 +41,22 @@ const routes = [
         component:require('./components/RegisterComponent.vue').default,
         meta:{title:'Register'}
 
+    },
+    {
+        path:'/profile',
+        name:'profile',
+        component:require('./components/Profile.vue').default,
+        meta:{title:'Profile'}
+
+    },
+    {
+        path:'/users',
+        name:'user',
+        component:require('./components/Users.vue').default,
+        meta:{title:'All Users'}
+
     }
+
 ];
 const router = new VueRouter({
     routes,
@@ -96,7 +102,7 @@ Axios.interceptors.response.use(
 
     }
 );
-
+export const bus = new Vue();
 const app = new Vue({
     router,
 }).$mount('#app');
