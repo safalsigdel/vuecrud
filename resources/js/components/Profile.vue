@@ -201,7 +201,7 @@
     </div>
 </template>
 <script>
-    import NavbarComponent from '../components/NavbarComponent';
+    import Navbar from '../components/Navbar';
     export default{
         data(){
             return {
@@ -262,7 +262,7 @@
             }
         },
         components:{
-            'navbar': NavbarComponent
+            'navbar': Navbar
 
         },
         created(){

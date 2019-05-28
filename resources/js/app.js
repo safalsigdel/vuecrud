@@ -12,7 +12,7 @@ Vue.use(VueRouter,VueAxios,axios,moment);
 const routes = [
     {
         path: '/',
-        component: require('./components/HomeComponent.vue').default,
+        component: require('./components/Home.vue').default,
         meta: {title:'Login'},
     },
     {
@@ -24,7 +24,7 @@ const routes = [
     {
         path: '/posts/:id',
         name: 'editPost',
-        component:require('./components/EditPostComponent.vue').default,
+        component:require('./components/EditPost.vue').default,
         meta:{title:'Edit Post',requiredAuth:true}
 
     },
@@ -38,7 +38,7 @@ const routes = [
     {
         path:'/register',
         name:'register',
-        component:require('./components/RegisterComponent.vue').default,
+        component:require('./components/Register.vue').default,
         meta:{title:'Register'}
 
     },

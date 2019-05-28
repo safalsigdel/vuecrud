@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <NavbarComponent></NavbarComponent>
+                <Navbar></Navbar>
                 <div class="card-body">
                     <p>Edit Post</p>
                     <form id="myForm">
@@ -25,7 +25,7 @@
 </template>
 <script>
     // const NavbarComponent = require('../components/NavbarComponent.vue').default;
-    import NavbarComponent from '../components/NavbarComponent';
+    import Navbar from '../components/Navbar';
     export default {
         data(){
             return {
@@ -73,7 +73,7 @@
             })
         },
         components:{
-            NavbarComponent
+            Navbar
 
         }
     }

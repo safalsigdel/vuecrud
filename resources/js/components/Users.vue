@@ -35,7 +35,7 @@
 </template>
 
 <script>
-    import NavbarComponent from '../components/NavbarComponent';
+    import Navbar from '../components/Navbar';
     import {bus} from "../app";
 
     export default {
@@ -71,7 +71,7 @@
             console.log('Component mounted.')
         },
         components:{
-            'navbar': NavbarComponent
+            'navbar': Navbar
 
         }
     }
