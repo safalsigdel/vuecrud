@@ -23,3 +23,5 @@
 7) Run php artisan migrate
 
 8) Run composer update
+
+9) Install php gd library
